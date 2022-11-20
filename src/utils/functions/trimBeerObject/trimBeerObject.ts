@@ -1,4 +1,4 @@
-import { Beer, BeerComplete } from "../../types";
+import { Beer, BeerComplete } from "../../../types";
 
 const trimBeerObject = (beer: BeerComplete): Beer => {
   const { abv, brewers_tips, description, first_brewed, food_pairing, id, image_url, name } = beer;
