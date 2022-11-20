@@ -1,6 +1,7 @@
 import { memo } from "react";
 
 interface Props {
+  dataTestId?: string;
   label?: string;
   max?: number;
   min?: number;
@@ -12,6 +13,7 @@ interface Props {
 }
 
 const TextField = ({
+  dataTestId = "text-field",
   label,
   max,
   min,
@@ -21,7 +23,7 @@ const TextField = ({
   type = "text",
   value,
 }: Props): JSX.Element => (
-  <div className="text-field" data-testid="text-field">
+  <div className="text-field" data-testid={dataTestId}>
     {label && <label className="text-field__label">{label}</label>}
     <input
       className="text-field__input"

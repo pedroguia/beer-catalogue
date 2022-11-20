@@ -1,12 +1,47 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import TextField from ".";
 
-// test("renders SearchField correctly", () => {
-//   render(<Footer />);
-//   expect(screen.getByTestId(/footer/i)).toBeInTheDocument();
-//   expect(screen.getByText(/Developed by Pedro Guia/i)).toBeInTheDocument();
-//   expect(screen.getByLabelText(/github link/i)).toBeInTheDocument();
-//   expect(screen.getByLabelText(/github link/i)).toBeInTheDocument();
-//   expect(screen.getByAltText(/github icon/i)).toBeInTheDocument();
-//   expect(screen.getByAltText(/linkedin icon/i)).toBeInTheDocument();
-// });
+test("renders TextField correctly", () => {
+  render(
+    <TextField
+      label="This is the label"
+      name="textfield"
+      onChange={() => {}}
+      placeholder="This is the placeholder"
+      value=""
+    />,
+  );
+  expect(screen.getByTestId(/text-field/i)).toBeInTheDocument();
+  expect(screen.getByText(/This is the label/i)).toBeInTheDocument();
+  expect(screen.getByPlaceholderText(/This is the placeholder/i)).toBeInTheDocument();
+});
+
+test("does not render placeholder if prop is undefined", () => {
+  render(
+    <TextField
+      label="This is the label"
+      name="textfield"
+      onChange={() => {}}
+      placeholder={undefined}
+      value=""
+    />,
+  );
+  expect(screen.queryByPlaceholderText(/This is the placeholder/i)).not.toBeInTheDocument();
+});
+
+test("calls onChange prop when value changed", () => {
+  const handleChange = jest.fn();
+  render(
+    <TextField
+      label="This is the label"
+      name="textfield"
+      onChange={handleChange}
+      placeholder="This is the placeholder"
+      value=""
+    />,
+  );
+  fireEvent.change(screen.getByPlaceholderText(/This is the placeholder/i), {
+    target: { value: "value" },
+  });
+  expect(handleChange).toHaveBeenCalledTimes(1);
+});

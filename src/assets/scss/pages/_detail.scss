@@ -47,6 +47,7 @@
 
       & > .title {
         margin-bottom: map-get($distance, 2) !important;
+        word-break: break-word;
       }
 
       & > .section {

@@ -9,8 +9,9 @@ import Modal from "../../components/modal";
 import TextField from "../../components/textField";
 import useDispatch from "../../utils/hooks/useDispatch";
 import useSelector from "../../utils/hooks/useSelector";
-import { getBeersList, add, reset } from "../../store/beers";
+import { getBeersList, add, reset } from "../../store/beersSlice";
 import { Beer } from "../../types";
+import getRoute from "../../utils/functions/getRoute";
 
 interface AddModal {
   isOpen: boolean;
@@ -33,7 +34,7 @@ const List = (): JSX.Element => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const list = useSelector(state => state.beers.list);
+  const beersList = useSelector(state => state.beers.beersList);
   const addedBeers = useSelector(state => state.beers.addedBeers);
   const currentPage = useSelector(state => state.beers.currentPage);
   const errorLoadingBeer = useSelector(state => state.beers.errorLoadingBeer);
@@ -49,7 +50,7 @@ const List = (): JSX.Element => {
 
   useEffect(() => {
     setIsLoading(false);
-  }, [list]);
+  }, [beersList]);
 
   useEffect(() => {
     if (hasClickedAddBeer.current) {
@@ -89,7 +90,7 @@ const List = (): JSX.Element => {
 
   // #region Go to detail functions
   const handleClickBeerDetail = (id: string): void => {
-    navigate(`/beers/${id}`);
+    navigate(getRoute.DETAIL(id));
   };
   // #endregion
 
@@ -99,7 +100,9 @@ const List = (): JSX.Element => {
     <>
       <div className="list">
         <div className="list__actions">
-          {!isLoading && <Button onClick={handleClickAddBeer} label="Create beer" />}
+          {!isLoading && (
+            <Button onClick={handleClickAddBeer} label="Create beer" dataTesteId="create-button" />
+          )}
         </div>
         {addedBeers.length > 0 && (
           <>
@@ -120,7 +123,7 @@ const List = (): JSX.Element => {
           </>
         )}
         <div className="list__grid">
-          {list.map((beer: Beer) => (
+          {beersList.map((beer: Beer) => (
             <Card
               key={beer.id}
               id={beer.id}
@@ -132,14 +135,21 @@ const List = (): JSX.Element => {
             />
           ))}
         </div>
-        {!isLoading && list.length === 0 && addedBeers.length === 0 && (
+        {!isLoading && beersList.length === 0 && addedBeers.length === 0 && (
           <EmptyState
             title="No beers found in the catalogue!"
             subtitle="Load more beers or create a new one."
           />
         )}
         <div className="list__load">
-          {!isLoading && <Button onClick={handleClickLoad} label="Load more" color="secondary" />}
+          {!isLoading && (
+            <Button
+              onClick={handleClickLoad}
+              label="Load more"
+              color="secondary"
+              dataTesteId="load-button"
+            />
+          )}
         </div>
       </div>
       {isLoading && <Loading />}
@@ -154,6 +164,7 @@ const List = (): JSX.Element => {
                 placeholder="Name"
                 label="Name"
                 name="name"
+                dataTestId="name-text-field"
               />
               <TextField
                 onChange={handleChangeAddModal}
@@ -161,6 +172,7 @@ const List = (): JSX.Element => {
                 placeholder="MM/YYYY"
                 label="First brewed"
                 name="firstBrewed"
+                dataTestId="first-brewed-text-field"
               />
               <TextField
                 onChange={handleChangeAddModal}
@@ -170,17 +182,24 @@ const List = (): JSX.Element => {
                 name="abv"
                 max={100}
                 min={0}
+                dataTestId="abv-text-field"
               />
               <i>*For challenge purposes, not all fields are customizable</i>
             </>
           }
           footer={
             <>
-              <Button onClick={handleClickAddModalClose} label="Cancel" color="secondary" />
+              <Button
+                onClick={handleClickAddModalClose}
+                label="Cancel"
+                color="secondary"
+                dataTesteId="cancel-button"
+              />
               <Button
                 onClick={handleClickAddModalConfirm}
                 label="Create"
                 disabled={isConfirmCreateDisabled}
+                dataTesteId="confirm-create-button"
               />
             </>
           }

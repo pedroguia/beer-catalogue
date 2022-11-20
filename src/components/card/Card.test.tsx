@@ -1,12 +1,19 @@
-import { render, screen } from "@testing-library/react";
-import Button from ".";
+import { render, screen, fireEvent } from "@testing-library/react";
+import Card from ".";
 
-// test("renders SearchField correctly", () => {
-//   render(<Button title="button" body={<></>} footer={<></>} />);
-//   expect(screen.getByTestId(/footer/i)).toBeInTheDocument();
-//   expect(screen.getByText(/Developed by Pedro Guia/i)).toBeInTheDocument();
-//   expect(screen.getByLabelText(/github link/i)).toBeInTheDocument();
-//   expect(screen.getByLabelText(/github link/i)).toBeInTheDocument();
-//   expect(screen.getByAltText(/github icon/i)).toBeInTheDocument();
-//   expect(screen.getByAltText(/linkedin icon/i)).toBeInTheDocument();
-// });
+test("renders Card correctly", () => {
+  render(<Card abv={10} firstBrewed="11/2022" id="1" imageUrl="" name="Beer" onClick={() => {}} />);
+  expect(screen.getByTestId(/card/i)).toBeInTheDocument();
+  expect(screen.getByText(/Beer/i)).toBeInTheDocument();
+  expect(screen.getByText(/First brewed in 11\/2022/i)).toBeInTheDocument();
+  expect(screen.getByText(/ABV: 10%/i)).toBeInTheDocument();
+});
+
+test("calls onClick prop when clicked", () => {
+  const handleClick = jest.fn();
+  render(
+    <Card abv={10} firstBrewed="11/2022" id="1" imageUrl="" name="Beer" onClick={handleClick} />,
+  );
+  fireEvent.click(screen.getByTestId(/card/i));
+  expect(handleClick).toHaveBeenCalledTimes(1);
+});

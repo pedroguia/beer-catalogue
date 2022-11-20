@@ -7,7 +7,7 @@ import sortBy from "../utils/functions/sortBy";
 import trimBeerObject from "../utils/functions/trimBeerObject";
 
 interface BeersState {
-  list: Beer[];
+  beersList: Beer[];
   currentPage: number;
   addedBeers: Beer[];
   removedBeers: string[];
@@ -28,7 +28,7 @@ interface ReducerEdit {
 }
 
 const initialState: BeersState = {
-  list: [],
+  beersList: [],
   currentPage: 1,
   addedBeers: [],
   removedBeers: [],
@@ -75,22 +75,22 @@ export const beersSlice = createSlice({
     },
     edit: (state, action: PayloadAction<ReducerEdit>) => {
       const { id, name, firstBrewed, abv } = action.payload;
-      const stateToChange: keyof BeersState = id.startsWith("n-") ? "addedBeers" : "list";
+      const stateToChange: keyof BeersState = id.startsWith("n-") ? "addedBeers" : "beersList";
       const beerIndex: number = state[stateToChange].findIndex((item: Beer) => item.id === id);
-      const listCopy: Beer[] = JSON.parse(JSON.stringify(state[stateToChange]));
+      const beersListCopy: Beer[] = JSON.parse(JSON.stringify(state[stateToChange]));
 
-      listCopy[beerIndex].name = name;
-      listCopy[beerIndex].firstBrewed = firstBrewed;
-      listCopy[beerIndex].abv = abv;
-      state[stateToChange] = listCopy;
+      beersListCopy[beerIndex].name = name;
+      beersListCopy[beerIndex].firstBrewed = firstBrewed;
+      beersListCopy[beerIndex].abv = abv;
+      state[stateToChange] = beersListCopy;
       toast.success(`Beer edited successfully!`);
     },
     remove: (state, action: PayloadAction<string>) => {
       const { payload: id } = action;
-      const stateToChange: keyof BeersState = id.startsWith("n-") ? "addedBeers" : "list";
-      const listCopy: Beer[] = JSON.parse(JSON.stringify(state[stateToChange]));
+      const stateToChange: keyof BeersState = id.startsWith("n-") ? "addedBeers" : "beersList";
+      const beersListCopy: Beer[] = JSON.parse(JSON.stringify(state[stateToChange]));
 
-      state[stateToChange] = listCopy.filter((beer: Beer) => beer.id !== id);
+      state[stateToChange] = beersListCopy.filter((beer: Beer) => beer.id !== id);
       state.removedBeers.push(id);
       toast.success(`Beer removed successfully!`);
     },
@@ -105,18 +105,18 @@ export const beersSlice = createSlice({
     builder
       .addCase(getBeersList.fulfilled, (state, action: PayloadAction<any>) => {
         const { data, page } = action.payload;
-        let newList: Beer[] = [
-          ...state.list,
+        let newBeerList: Beer[] = [
+          ...state.beersList,
           ...data.map((beer: BeerComplete) => trimBeerObject(beer)),
         ];
-        newList = newList.filter((beer: Beer) => !state.removedBeers.includes(beer.id));
+        newBeerList = newBeerList.filter((beer: Beer) => !state.removedBeers.includes(beer.id));
 
-        state.list = sortBy(filterUnique(newList, "id"), "id");
+        state.beersList = sortBy(filterUnique(newBeerList, "id"), "id");
         state.currentPage = page;
       })
       .addCase(getBeerById.fulfilled, (state, action: PayloadAction<BeerComplete[]>) => {
         const [beer] = action.payload;
-        state.list = [...state.list, trimBeerObject(beer)];
+        state.beersList = [...state.beersList, trimBeerObject(beer)];
       })
       .addCase(getBeerById.rejected, (state, action: any) => {
         const {

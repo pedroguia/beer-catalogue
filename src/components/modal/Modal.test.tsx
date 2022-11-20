@@ -1,12 +1,16 @@
 import { render, screen } from "@testing-library/react";
-import Button from ".";
+import Modal from ".";
 
-test("renders SearchField correctly", () => {
-  render(<Button title="button" body={<></>} footer={<></>} />);
-  expect(screen.getByTestId(/footer/i)).toBeInTheDocument();
-  expect(screen.getByText(/Developed by Pedro Guia/i)).toBeInTheDocument();
-  expect(screen.getByLabelText(/github link/i)).toBeInTheDocument();
-  expect(screen.getByLabelText(/github link/i)).toBeInTheDocument();
-  expect(screen.getByAltText(/github icon/i)).toBeInTheDocument();
-  expect(screen.getByAltText(/linkedin icon/i)).toBeInTheDocument();
+test("renders Modal correctly", () => {
+  render(
+    <Modal
+      title="This is the title"
+      body={<p>This is the body</p>}
+      footer={<p>This is the footer</p>}
+    />,
+  );
+  expect(screen.getByTestId(/modal/i)).toBeInTheDocument();
+  expect(screen.getByText(/This is the title/i)).toBeInTheDocument();
+  expect(screen.getByText(/This is the body/i)).toBeInTheDocument();
+  expect(screen.getByText(/This is the footer/i)).toBeInTheDocument();
 });

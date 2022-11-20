@@ -8,12 +8,9 @@ import Modal from "../../components/modal";
 import TextField from "../../components/textField";
 import useDispatch from "../../utils/hooks/useDispatch";
 import useSelector from "../../utils/hooks/useSelector";
-import { getBeerById, edit, remove } from "../../store/beers";
+import { getBeerById, edit, remove } from "../../store/beersSlice";
 import { Beer } from "../../types";
 import isDefined from "../../utils/functions/isDefined";
-
-// TODO: tentar instalar prettier
-// TODO: testes
 
 interface EditModal {
   isOpen: boolean;
@@ -37,14 +34,14 @@ const Detail = (): JSX.Element => {
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  const list = useSelector(state => state.beers.list);
+  const beersList = useSelector(state => state.beers.beersList);
   const addedBeers = useSelector(state => state.beers.addedBeers);
   const errorLoadingBeer = useSelector(state => state.beers.errorLoadingBeer);
 
   const hasClickedEditBeer = useRef<boolean>(false);
   const hasClickedRemoveBeer = useRef<boolean>(false);
-  const idExistsInAddedBeerList = useRef<boolean>(false);
-  const idExistsInBeerList = useRef<boolean>(false);
+  const idExistsInAddedBeersList = useRef<boolean>(false);
+  const idExistsInBeersList = useRef<boolean>(false);
   const [beer, setBeer] = useState<Beer | undefined>(undefined);
   const [editModal, setEditModal] = useState<EditModal>(initialValues.editModal);
   const [isOpenRemoveModal, setIsOpenRemoveModal] = useState<boolean>(
@@ -52,11 +49,11 @@ const Detail = (): JSX.Element => {
   );
 
   useEffect(() => {
-    idExistsInAddedBeerList.current = addedBeers.some((beer: Beer) => beer.id === id);
-    idExistsInBeerList.current = list.some((beer: Beer) => beer.id === id);
+    idExistsInAddedBeersList.current = addedBeers.some((beer: Beer) => beer.id === id);
+    idExistsInBeersList.current = beersList.some((beer: Beer) => beer.id === id);
 
-    if (idExistsInAddedBeerList.current) setBeer(addedBeers.find((beer: Beer) => beer.id === id));
-    else if (idExistsInBeerList.current) setBeer(list.find((beer: Beer) => beer.id === id));
+    if (idExistsInAddedBeersList.current) setBeer(addedBeers.find((beer: Beer) => beer.id === id));
+    else if (idExistsInBeersList.current) setBeer(beersList.find((beer: Beer) => beer.id === id));
     else dispatch(getBeerById(Number(id)));
   }, [id]);
 
@@ -71,10 +68,11 @@ const Detail = (): JSX.Element => {
         hasClickedEditBeer.current = false;
       }
 
-      if (idExistsInAddedBeerList.current) setBeer(addedBeers.find((beer: Beer) => beer.id === id));
-      else setBeer(list.find((beer: Beer) => beer.id === id));
+      if (idExistsInAddedBeersList.current)
+        setBeer(addedBeers.find((beer: Beer) => beer.id === id));
+      else setBeer(beersList.find((beer: Beer) => beer.id === id));
     }
-  }, [list, addedBeers]);
+  }, [beersList, addedBeers]);
 
   // #region Go Back functions
   const handleClickGoBack = (): void => {
@@ -132,7 +130,14 @@ const Detail = (): JSX.Element => {
     <>
       <div className="detail" data-testid="detail">
         <div className="detail__actions">
-          {!isLoading && <Button onClick={handleClickGoBack} label="Go Back" color="secondary" />}
+          {!isLoading && (
+            <Button
+              onClick={handleClickGoBack}
+              label="Go Back"
+              color="secondary"
+              dataTesteId="go-back-button"
+            />
+          )}
           {isDefined(beer) && (
             <>
               <Button
@@ -140,8 +145,9 @@ const Detail = (): JSX.Element => {
                 label="Remove"
                 color="danger"
                 disabled={hasClickedRemoveBeer.current}
+                dataTesteId="remove-button"
               />
-              <Button onClick={handleClickEditBeer} label="Edit" />
+              <Button onClick={handleClickEditBeer} label="Edit" dataTesteId="edit-button" />
             </>
           )}
         </div>
@@ -178,7 +184,7 @@ const Detail = (): JSX.Element => {
                 <p>{beer?.firstBrewed}</p>
               </div>
               <div className="section">
-                <h4>Abv</h4>
+                <h4>ABV</h4>
                 <p>{beer?.abv}%</p>
               </div>
             </div>
@@ -191,8 +197,18 @@ const Detail = (): JSX.Element => {
           body={<p>Are you sure that you want to remove this beer from the catalogue?</p>}
           footer={
             <>
-              <Button onClick={handleClickRemoveModalClose} label="Cancel" color="secondary" />
-              <Button onClick={handleClickRemoveModalConfirm} label="Remove" color="danger" />
+              <Button
+                onClick={handleClickRemoveModalClose}
+                label="Cancel"
+                color="secondary"
+                dataTesteId="cancel-button"
+              />
+              <Button
+                onClick={handleClickRemoveModalConfirm}
+                label="Remove"
+                color="danger"
+                dataTesteId="confirm-remove-button"
+              />
             </>
           }
         />
@@ -208,6 +224,7 @@ const Detail = (): JSX.Element => {
                 placeholder="Name"
                 label="Name"
                 name="name"
+                dataTestId="name-text-field"
               />
               <TextField
                 onChange={handleChangeEditModal}
@@ -215,6 +232,7 @@ const Detail = (): JSX.Element => {
                 placeholder="MM/YYYY"
                 label="First brewed"
                 name="firstBrewed"
+                dataTestId="first-brewed-text-field"
               />
               <TextField
                 onChange={handleChangeEditModal}
@@ -224,17 +242,24 @@ const Detail = (): JSX.Element => {
                 name="abv"
                 max={100}
                 min={0}
+                dataTestId="abv-text-field"
               />
               <i>*For challenge purposes, not all fields are editable</i>
             </>
           }
           footer={
             <>
-              <Button onClick={handleClickEditModalClose} label="Cancel" color="secondary" />
+              <Button
+                onClick={handleClickEditModalClose}
+                label="Cancel"
+                color="secondary"
+                dataTesteId="cancel-button"
+              />
               <Button
                 onClick={handleClickEditModalConfirm}
                 label="Edit"
                 disabled={isConfirmEditDisabled}
+                dataTesteId="confirm-edit-button"
               />
             </>
           }
