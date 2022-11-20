@@ -1,0 +1,56 @@
+body {
+  font-family: "Roboto Condensed", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+}
+
+#ie-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 100vh;
+  background-color: map-get($colors, background);
+
+  .app {
+    flex-grow: 1;
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
+
+    @media (min-width: map-get($breakpoints, sm)) {
+      max-width: 540px;
+    }
+
+    @media (min-width: map-get($breakpoints, md)) {
+      max-width: 686px;
+    }
+
+    @media (min-width: map-get($breakpoints, lg)) {
+      max-width: 960px;
+    }
+
+    @media (min-width: map-get($breakpoints, xl)) {
+      max-width: 1015px;
+    }
+    @media (min-width: map-get($breakpoints, xxl)) {
+      max-width: 1400px;
+    }
+
+    h1 {
+      margin: 0;
+    }
+  }
+}
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

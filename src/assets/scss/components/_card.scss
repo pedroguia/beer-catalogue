@@ -1,0 +1,57 @@
+.card {
+  display: flex;
+  justify-content: center;
+  gap: map-get($distance, 1);
+  height: 220px;
+  padding: map-get($distance, 3);
+  border-radius: map-get($border-radius, 2);
+  background-color: white;
+  transition: all 400ms;
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: map-get($elevation, 2);
+    transform: translateY(-map-get($distance, 1));
+  }
+
+  &__circle {
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background-color: #fffbf8;
+    z-index: 0;
+  }
+
+  &__image {
+    height: 220px;
+    z-index: 1;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-basis: 40%;
+    gap: 4px;
+    max-width: 100px;
+    z-index: 1;
+
+    & > h3 {
+      margin: 0;
+      padding-bottom: 4px;
+      border-bottom: 1px solid map-get($colors, primary);
+      color: map-get($colors, primary);
+    }
+
+    & > p {
+      margin: 0;
+      font-size: 12px;
+
+      &:first-of-type {
+        font-size: 14px;
+        font-weight: 600;
+      }
+    }
+  }
+}

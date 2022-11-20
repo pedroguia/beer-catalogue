@@ -1,0 +1,29 @@
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+  padding: 15px;
+  color: white;
+  background-color: black;
+
+  &__text {
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  &__icons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & > a {
+      margin: 4px 7px;
+
+      & > img {
+        height: 22px;
+      }
+    }
+  }
+}

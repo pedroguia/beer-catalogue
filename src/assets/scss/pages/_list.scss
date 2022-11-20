@@ -1,0 +1,43 @@
+.list {
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: map-get($distance, 3);
+  }
+
+  &__grid {
+    display: grid;
+    gap: 1rem;
+
+    &.added-list {
+      margin-bottom: 72px;
+    }
+
+    @media (min-width: map-get($breakpoints, sm)) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: map-get($breakpoints, md)) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media (min-width: map-get($breakpoints, lg)) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (min-width: map-get($breakpoints, xl)) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (min-width: map-get($breakpoints, xxl)) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  &__load {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: map-get($distance, 3);
+  }
+}

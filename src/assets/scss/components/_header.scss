@@ -1,0 +1,15 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin: map-get($distance, 2) 0 48px 0;
+
+  > h3 {
+    margin: 0;
+  }
+
+  @media (min-width: map-get($breakpoints, sm)) {
+    flex-direction: row;
+  }
+}

@@ -1,0 +1,36 @@
+$colors: (
+  primary: #eda155,
+  secondary: #ffedcf,
+  danger: #d83434,
+  background: #f2f1f0,
+  black: #1a1b1c,
+);
+
+$distance: (
+  1: 8px,
+  2: 16px,
+  3: 24px,
+  4: 32px,
+);
+
+$border-radius: (
+  1: 8px,
+  2: 18px,
+);
+
+$breakpoints: (
+  xs: 425px,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px,
+);
+
+$elevation: (
+  1: 0px 4px 8px get-rgba(map-get($colors, black), 4),
+  2: (
+    0px 16px 32px get-rgba(map-get($colors, black), 4),
+    0px 4px 16px get-rgba(map-get($colors, black), 4),
+  ),
+);

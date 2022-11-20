@@ -1,0 +1,25 @@
+.text-field {
+  display: flex;
+  flex-direction: column;
+  gap: map-get($distance, 1);
+  margin-bottom: map-get($distance, 1);
+
+  &__label {
+    font-weight: 600;
+  }
+
+  &__input {
+    width: -webkit-fill-available;
+    padding: map-get($distance, 1);
+    border: 1px solid #3f3f3f;
+    border-radius: map-get($border-radius, 1);
+    background-color: white;
+    transition: all 200ms;
+
+    &:focus {
+      border: 1px solid #3f3f3f;
+      outline: none;
+      box-shadow: 0 0 0 1px #3f3f3f;
+    }
+  }
+}

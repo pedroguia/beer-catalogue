@@ -1,0 +1,43 @@
+.modal {
+  display: flex;
+  flex-direction: column;
+  gap: map-get($distance, 2);
+  width: 100%;
+  max-width: 500px;
+  padding: map-get($distance, 3);
+  border-radius: map-get($border-radius, 2);
+  background-color: white;
+  box-shadow: map-get($elevation, 2);
+
+  &__header {
+    > .title {
+      margin: 0;
+    }
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: map-get($distance, 1);
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: map-get($distance, 1);
+  }
+}
+
+.backdrop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: #828282d9;
+  z-index: 9;
+}

@@ -1,0 +1,59 @@
+.btn {
+  padding: map-get($distance, 1) map-get($distance, 2);
+  border-radius: map-get($border-radius, 2);
+  border: none;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 200ms;
+
+  &-full {
+    width: 100%;
+  }
+
+  &-primary {
+    &:not(:disabled) {
+      color: white;
+      background-color: map-get($colors, primary);
+      border: 1px solid map-get($colors, primary);
+
+      &:hover {
+        background-color: #d87b3d;
+        border: 1px solid #d87b3d;
+        box-shadow: 0 0 0 1px #d87b3d;
+      }
+    }
+  }
+
+  &-secondary {
+    &:not(:disabled) {
+      color: #3f3f3f;
+      background-color: white;
+      border: 1px solid #3f3f3f;
+
+      &:hover {
+        border: 1px solid #3f3f3f;
+        box-shadow: 0 0 0 1px #3f3f3f;
+      }
+    }
+  }
+
+  &-danger {
+    &:not(:disabled) {
+      color: white;
+      background-color: map-get($colors, danger);
+      border: 1px solid map-get($colors, danger);
+
+      &:hover {
+        background-color: #a71818;
+        border: 1px solid #a71818;
+        box-shadow: 0 0 0 1px #a71818;
+      }
+    }
+  }
+
+  &:hover {
+    &:not(:disabled) {
+      cursor: pointer;
+    }
+  }
+}

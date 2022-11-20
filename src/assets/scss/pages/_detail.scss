@@ -1,0 +1,66 @@
+.detail {
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: map-get($distance, 1);
+    margin-bottom: map-get($distance, 3);
+
+    & > .btn:first-of-type {
+      margin-right: auto;
+    }
+  }
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: map-get($distance, 3);
+    padding: map-get($distance, 4);
+    border-radius: map-get($border-radius, 2);
+    background-color: white;
+    box-shadow: map-get($elevation, 1);
+
+    @media (min-width: map-get($breakpoints, md)) {
+      flex-direction: row;
+    }
+
+    &--left {
+      display: flex;
+      justify-content: center;
+      flex-grow: 1;
+
+      & > img {
+        height: 300px;
+
+        @media (min-width: map-get($breakpoints, md)) {
+          height: 500px;
+        }
+      }
+    }
+
+    &--right {
+      display: flex;
+      flex-direction: column;
+      flex-basis: 75%;
+      gap: map-get($distance, 2);
+      overflow-y: scroll;
+
+      & > .title {
+        margin-bottom: map-get($distance, 2) !important;
+      }
+
+      & > .section {
+        & > h4 {
+          width: fit-content;
+          margin: 0 0 map-get($distance, 1) 0;
+          padding-bottom: 2px;
+          border-bottom: 3px solid map-get($colors, primary);
+        }
+
+        & > p {
+          margin: 0;
+        }
+      }
+    }
+  }
+}
