@@ -4,7 +4,7 @@ A small project made with React & Punk API
 
 ## Live at
 
-https://deus-code-challenge.vercel.app
+https://beer-catalogue.vercel.app
 
 ## Built with
 

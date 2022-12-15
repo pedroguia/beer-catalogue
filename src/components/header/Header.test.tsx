@@ -5,5 +5,5 @@ test("renders Header correctly", () => {
   render(<Header />);
   expect(screen.getByTestId(/header/i)).toBeInTheDocument();
   expect(screen.getByText(/Beer Catalogue/i)).toBeInTheDocument();
-  expect(screen.getByText(/DEUS Code Challenge/i)).toBeInTheDocument();
+  expect(screen.getByText(/Code Challenge/i)).toBeInTheDocument();
 });
